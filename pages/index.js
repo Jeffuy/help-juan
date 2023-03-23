@@ -55,6 +55,7 @@ export default function Home() {
 		}
 
 		console.log(messages)
+		setClicked(false)
 	}
 
 	return (
