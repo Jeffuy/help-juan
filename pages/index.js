@@ -62,6 +62,20 @@ export default function Home() {
 				<title>Chatbot</title>
 				<link rel="icon" href="/vernon.jpg" />
 			</Head>
+			{/* <!-- Google tag (gtag.js) --> */}
+
+			<Script async src={`https://www.googletagmanager.com/gtag/js?id=G-C3DJWX5TE8`} />
+			<Script
+				dangerouslySetInnerHTML={{
+					__html: `
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments)};
+					gtag('js', new Date());
+					gtag('config', 'G-C3DJWX5TE8');
+					` }}
+			/>
+			<Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3348069737233726"
+				crossorigin="anonymous"></Script>
 			<main className={styles.main}>
 				<img src="/vernon.jpg" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Chat with Vernon Dursley</h1>
