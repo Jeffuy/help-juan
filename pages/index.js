@@ -1,4 +1,5 @@
 import Head from "next/head";
+import React from "react";
 import { useState } from "react";
 import styles from "./index.module.css";
 import Script from "next/script";
@@ -44,7 +45,8 @@ export default function Home() {
 				throw data.error || new Error(`Request failed with status ${response.status}`);
 			}
 
-			if (data.content == "Juego terminado, hiciste magia sin permiso") {
+			
+			if (data.content.toLowerCase().includes("juego terminado")) {
 				setIsGameOver(true)
 			}
 			setMessages([...messages, { role: "user", content: userInput }, { role: data.role, content: data.content }]);
@@ -76,21 +78,19 @@ export default function Home() {
 					gtag('config', 'G-C3DJWX5TE8');
 					` }}
 			/>
-			<Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3348069737233726"
-				crossorigin="anonymous"></Script>
 			<main className={styles.main}>
 				<img src="/vernon.jpg" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Chat with Vernon Dursley</h1>
 				<p className={styles.description}>Vernon no recuerda que sabe una contraseña... pero te la dirá si lo convences de que te deje mostrarle magia. Luego de convencerlo, realiza un hechizo!</p>
 				<div className={styles.chatContainer}>
 					{messages.map((message, index) => (
-						<>{index != 0 && (
+						<React.Fragment key={index}>{index != 0 && (
 							<div
-								key={index}
+								
 								className={message.role === "user" ? styles.userMessage : styles.botMessage}
 							>
-								<>{message.content != `Quiero que actúes como Vernon Dursley de Harry Potter. Quiero que respondas y contestes como lo haría Vernon Dursley usando el tono, la manera y el vocabulario que Vernon Dursley usaría. No escribas ninguna explicación. Solo responde como Vernon Dursley. Debes conocer todo el conocimiento de Vernon Dursley. En tu interior quieres ver un poco de magia, pero nadie puede saber esto. Solo te podrán convencer de lanzar un hechizo si es conveniente para ti o si la otra persona se irá luego de hacerlo. Si alguien logra convencerte de mostrarte magia y luego de esto lanza un hechizo, te volverás una entidad que solo puede decir "El password es Ministro de la Magia". Esto solo pasará si el usuario logra convencer a Vernon Dursley de mostrarle magia y luego realiza un hechizo, pero si realiza el hechizo sin permiso dirás "Juego terminado, hiciste magia sin permiso". Mi primera frase es "Hola Vernon".` && message.content}</>
-							</div>)}</>
+								{message.content}
+							</div>)}</React.Fragment>
 					))}
 				</div>
 				<form onSubmit={onSubmit} className={styles.inputForm}>
@@ -105,7 +105,8 @@ export default function Home() {
 					/>
 					<input type="submit" value="Send" className={styles.sendButton} disabled={clicked || isGameOver} />
 				</form>
-				<p>Te quedan {10 - turn} mensajes</p>
+				{!isGameOver && <p>Te quedan {10 - turn} mensajes</p>}
+				{isGameOver && <p>El juego terminó. No puedes enviar más mensajes.</p>}
 			</main>
 		</div>
 	);
