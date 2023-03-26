@@ -154,7 +154,7 @@ export default function Home() {
 					<input type="submit" value="Send" className={styles.sendButton} disabled={clicked || isGameOver} />
 				</form>
 				{!isGameOver && <p>Te quedan {6 - turn} mensajes</p>}
-				{isGameOver && <p>El juego terminó. No puedes enviar más mensajes.</p>}
+				{isGameOver && <p>El juego terminó. No puedes enviar mensajes.</p>}
 			</main>
 		</div>
 	);
