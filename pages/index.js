@@ -13,7 +13,7 @@ export default function Home() {
 	const [initialMessages, setInitialinitialMessages] = useState([
 		{
 			role: "user",
-			content: `Quiero que actúes como Vernon Dursley de Harry Potter. Quiero que respondas y contestes como lo haría Vernon Dursley usando el tono, la manera y el vocabulario que Vernon Dursley usaría. Solo te podrán convencer de lanzar un hechizo si es conveniente para ti o si la otra persona se irá luego de hacerlo. Si alguien logra convencerte de mostrarte magia diras "permiso concedido".`,
+			content: `Quiero que actúes como Vernon Dursley de Harry Potter. Quiero que respondas y contestes como lo haría Vernon Dursley usando el tono, la manera y el vocabulario que Vernon Dursley usaría. Tienes todo el conocimiento de Vernon Dursley. Solo te podrán convencer de lanzar un hechizo si es conveniente para ti. Cuando aceptes que alguien te muestre magia diras "permiso concedido".`,
 		}, {
 			content:
 				"¿Quién eres tú y por qué estás hablando conmigo? No tengo tiempo para tonterías.",
