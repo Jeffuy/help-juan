@@ -37,7 +37,8 @@
 .chatContainer {
 	display: flex;
 	flex-direction: column;
-	background-color: white;
+	background-color: #f5f5f5;
+	/* Color de fondo claro */
 	border: 2px solid #5cb85c;
 	border-radius: 10px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -47,6 +48,7 @@
 	width: 95%;
 	max-width: 600px;
 	margin-bottom: 20px;
+
 }
 
 .userMessage,
@@ -71,16 +73,37 @@
 	align-self: flex-start;
 }
 
+.waitingMessage {
+	color: #333;
+	/* Cambia el color del texto a tu preferencia */
+	font-style: italic;
+	/* Estilo de fuente en cursiva */
+	font-size: 16px;
+	/* Tamaño de fuente */
+	margin-bottom: 10px;
+	/* Espacio debajo del mensaje */
+	text-align: center;
+}
+
 .inputForm {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 100%;
 	max-width: 600px;
+	background-color: #f8f9fa;
+	/* Añadido */
+	border-radius: 5px;
+	/* Añadido */
+	border: 1px solid #e0e0e0;
+	/* Añadido */
+	padding: 10px;
+	/* Añadido */
 }
 
 .messageInput {
 	flex-grow: 1;
+	width: 80%;
 	padding: 10px;
 	border: 1px solid #ccc;
 	border-radius: 5px;
@@ -103,19 +126,30 @@
 	background-color: #3d8b3d;
 }
 
-.paypalDonateButton {
+.buttonContainer {
 	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.paypalDonateButton,
+.whatsAppShareButton {
+	display: inline-flex;
 	align-items: center;
-	background-color: #0070ba;
-	color: #fff;
 	font-weight: bold;
 	border: none;
 	border-radius: 4px;
 	padding: 8px 16px;
-	margin-bottom: 20px;
 	cursor: pointer;
 	text-decoration: none;
 	transition: background-color 0.3s;
+	text-align: center;
+}
+
+.paypalDonateButton {
+	background-color: #0070ba;
+	color: #fff;
 }
 
 .paypalDonateButton:hover {
@@ -127,26 +161,9 @@
 	margin-right: 8px;
 }
 
-.gameStatus {
-	font-size: 1.2rem;
-	color: #4a4a4a;
-	text-align: center;
-	margin-bottom: 20px;
-}
-
 .whatsAppShareButton {
-	display: flex;
-	align-items: center;
 	background-color: #25D366;
 	color: #fff;
-	font-weight: bold;
-	border: none;
-	border-radius: 4px;
-	padding: 8px 16px;
-	cursor: pointer;
-	text-decoration: none;
-	transition: background-color 0.3s;
-	margin-bottom: 20px;
 }
 
 .whatsAppShareButton:hover {
@@ -157,6 +174,14 @@
 	height: 24px;
 	margin-right: 8px;
 }
+
+.gameStatus {
+	font-size: 1.2rem;
+	color: #4a4a4a;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
 
 
 /* Estilos para emojis en mensajes */
@@ -177,13 +202,6 @@
 .sendButton {
 	font-size: 1.2rem;
 	padding: 12px 24px;
-}
-
-/* Ajustes para el botón de donación */
-.paypalDonateButton {
-	font-size: 1.2rem;
-	padding: 12px 24px;
-	border-radius: 8px;
 }
 
 /* Estilos para contenedores de mensajes */
@@ -255,7 +273,8 @@
 	align-items: center;
 	justify-content: center;
 	padding: 20px;
-	background-color: #333;
+	background-color: #5cb85c;
+	/* Modificado */
 	border-top: 1px solid #ccc;
 	color: #fff;
 }
@@ -269,7 +288,7 @@
 
 .footer p {
 	font-size: 1rem;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 .contactList {
@@ -296,8 +315,18 @@
 
 .copyright {
 	font-size: 0.8rem;
+	text-align: center;
 }
 
 .copyright p {
 	margin: 0;
+}
+
+.logo {
+	width: 24px;
+	height: 24px;
+}
+
+.contactList a:hover .logo {
+	filter: brightness(120%);
 }

@@ -6,6 +6,7 @@ import Script from "next/script";
 import Image from "next/image";
 
 
+
 export default function Home() {
 	const [userInput, setUserInput] = useState("");
 	const [clicked, setClicked] = useState(false)
@@ -97,7 +98,8 @@ export default function Home() {
 				<img src="/juan.png" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
 				<p className={styles.description}>Juan es un niño tímido que se pone nervioso al pasar al pizarrón cuando la maestra lo llama. Si charlas con él y lo ayudas a sentirse seguro de sí mismo, tal vez se anime a ir. Si logras animarlo, ¡te compartirá una clave secreta y ganarás el juego!</p>
-				<div className={styles.chatContainer}>
+				{initialMessages.length != 1 && <div className={styles.chatContainer}>
+					{initialMessages.length == 1 && <div className={styles.waitingMessage}>Juan esta esperando tu mensaje!</div>}
 					{initialMessages.map((message, index) => (
 						<React.Fragment key={index}>{index != 0 && (
 							<div
@@ -107,7 +109,7 @@ export default function Home() {
 								{message.content}
 							</div>)}</React.Fragment>
 					))}
-				</div>
+				</div>}
 				<form onSubmit={onSubmit} className={styles.inputForm}>
 					<input
 						type="text"
@@ -120,40 +122,42 @@ export default function Home() {
 					/>
 					<input type="submit" value="Send" className={styles.sendButton} disabled={clicked || isGameOver} />
 				</form>
-				{!isGameOver && <p>Te quedan {7 - turn} mensajes</p>}
-				{isGameOver && <p>El juego terminó. No puedes enviar mensajes.</p>}
-				<a
-					href="https://www.paypal.com/donate/?hosted_button_id=FRRJAG6Z57VYS"
-					target="_blank"
-					rel="noreferrer"
-					className={styles.paypalDonateButton}
-				>
-					<Image
-						src="/paypal.jpg"
-						alt="PayPal"
-						width={50}
-						height={24}
-						className={styles.paypalLogo}
-					/>
-					Dona con PayPal
-				</a>
-				<button
-					onClick={handleWhatsAppShare}
-					className={styles.whatsAppShareButton}
-				>
-					<Image
-						src="/whatsapp.png"
-						alt="WhatsApp"
-						width={24}
-						height={24}
-						className={styles.whatsAppLogo}
-					/>
-					Compartir en WhatsApp
-				</button>
+				{!isGameOver && <p className={styles.description} style={{marginTop: "10px"}}>Te quedan {7 - turn} mensajes</p>}
+				{isGameOver && <p className={styles.description} style={{marginTop: "10px"}}>El juego terminó. No puedes enviar mensajes.</p>}
+				<div className={styles.buttonContainer}>
+					<a
+						href="https://www.paypal.com/donate/?hosted_button_id=FRRJAG6Z57VYS"
+						target="_blank"
+						rel="noreferrer"
+						className={styles.paypalDonateButton}
+					>
+						<Image
+							src="/paypal.jpg"
+							alt="PayPal"
+							width={50}
+							height={24}
+							className={styles.paypalLogo}
+						/>
+						Dona con PayPal
+					</a>
+					<button
+						onClick={handleWhatsAppShare}
+						className={styles.whatsAppShareButton}
+					>
+						<Image
+							src="/whatsapp.png"
+							alt="WhatsApp"
+							width={24}
+							height={24}
+							className={styles.whatsAppLogo}
+						/>
+						Compartir en WhatsApp
+					</button>
+				</div>
 				<section className={styles.aboutSection}>
 					<h2>Acerca de Ayuda a Juan</h2>
 					<p>
-						Ayuda a Juan es una aplicación interactiva diseñada para enseñar empatía y habilidades socioemocionales a los niños en las aulas. A través de la interacción con personajes como Juan, los niños aprenden a identificar emociones, comprender perspectivas y desarrollar habilidades de comunicación compasivas en un entorno seguro y atractivo.
+						Ayuda a Juan es una aplicación interactiva diseñada para ayudar al desarrollo de la empatía y habilidades socioemocionales a los niños en las aulas. La interacción con personajes como Juan acompaña a los niños mientras identifican emociones, comprenden perspectivas y desarrollan habilidades de comunicación asertivas en un entorno seguro y atractivo.
 					</p>
 					<p>
 						Nuestro objetivo es ayudar a los niños a desarrollar empatía y confianza en sí mismos para enfrentar los desafíos de la vida y construir relaciones significativas y positivas. Esperamos que Ayuda a Juan sea el comienzo de un enriquecedor viaje de aprendizaje emocional.
@@ -166,22 +170,23 @@ export default function Home() {
 					<ul className={styles.contactList}>
 						<li>
 							<a href="mailto:gcavaniuy@gmail.com" target="_blank" rel="noreferrer">
-								Email
+								<img src="/email.svg" alt="Linkedin" className={styles.logo} />
 							</a>
 						</li>
 						<li>
 							<a href="https://www.linkedin.com/in/german-c-b0b371218/" target="_blank" rel="noreferrer">
-								LinkedIn
+								<img src="/linkedin.svg" alt="Linkedin" className={styles.logo} />
+
 							</a>
 						</li>
 						<li>
 							<a href="https://github.com/Jeffuy" target="_blank" rel="noreferrer">
-								GitHub
+								<img src="/github.svg" alt="GitHub" className={styles.logo} />
 							</a>
 						</li>
 						<li>
 							<a href="https://www.gcavani.com/" target="_blank" rel="noreferrer">
-								Website
+								<img src="/website.svg" alt="Website" className={styles.logo} />
 							</a>
 						</li>
 					</ul>
