@@ -62,6 +62,12 @@ export default function Home() {
 		setClicked(false)
 	}
 
+	const handleWhatsAppShare = () => {
+		const message = encodeURIComponent("¡Hola! Te invito a jugar Ayuda a Juan. ¡Es muy divertido! Aquí está el enlace:");
+		const url = encodeURIComponent(window.location.href);
+		const shareLink = `https://wa.me/?text=${message}%20${url}`;
+		window.open(shareLink, '_blank');
+	};
 
 
 
@@ -131,6 +137,19 @@ export default function Home() {
 					/>
 					Dona con PayPal
 				</a>
+				<button
+					onClick={handleWhatsAppShare}
+					className={styles.whatsAppShareButton}
+				>
+					<Image
+						src="/whatsapp.png"
+						alt="WhatsApp"
+						width={24}
+						height={24}
+						className={styles.whatsAppLogo}
+					/>
+					Compartir en WhatsApp
+				</button>
 			</main>
 		</div>
 	);
