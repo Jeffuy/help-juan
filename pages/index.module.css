@@ -15,7 +15,7 @@
 .icon {
 	width: 120px;
 	height: 120px;
-	margin-bottom: 0px;
+	margin-bottom: 20px;
 	border-radius: 50%;
 }
 
@@ -23,6 +23,7 @@
 	font-size: 2rem;
 	color: #4a4a4a;
 	text-align: center;
+	
 }
 
 .description {
@@ -31,6 +32,7 @@
 	line-height: 1.5;
 	color: #333;
 	margin-bottom: 20px;
+	margin-top: 20px;
 	max-width: 600px;
 }
 
