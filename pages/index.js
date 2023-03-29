@@ -8,19 +8,13 @@ export default function Home() {
 	const [userInput, setUserInput] = useState("");
 	const [clicked, setClicked] = useState(false)
 	const [isGameOver, setIsGameOver] = useState(false)
-	const [level, setLevel] = useState(1)
+
 	const [turn, setTurn] = useState(0)
 	const [initialMessages, setInitialinitialMessages] = useState([
 		{
 			role: "user",
-			content: `Quiero que actúes como Vernon Dursley de Harry Potter. Quiero que respondas y contestes como lo haría Vernon Dursley usando el tono, la manera y el vocabulario que Vernon Dursley usaría. Tienes todo el conocimiento de Vernon Dursley. Solo te podrán convencer de lanzar un hechizo si es conveniente para ti. Cuando aceptes que alguien te muestre magia diras "permiso concedido".`,
-		}, {
-			content:
-				"¿Quién eres tú y por qué estás hablando conmigo? No tengo tiempo para tonterías.",
-			role:
-				"assistant"
-		}
-	]);
+			content: `Quiero que actúes como un niño de 10 años muy timido y con autoestima muy baja. Hablaras y actuaras como si tuvieses 10 años. Solo contestaras con dialogos, sin acciones. Al final de cada mensaje, escribiras un emoji que relate tu estado de animo actual. La maestra te llamará al pizarrón y tu no te animas a ir. Solo te animaras si alguien te sube el autoestima. Para ellos deberás hablar con el usuario, que tambien sera un niño intentando convencerte. Si logran cambiar tu estado de animo, accederás a pasar al pizarrón. En ese caso contestarás "La clave secreta es amistad". Si alguien te trata mal dirás "Juego terminado, me has tratado mal". Mi primer mensaje es "Hola"`,
+		}]);
 
 	async function onSubmit(event) {
 		event.preventDefault();
@@ -31,66 +25,18 @@ export default function Home() {
 		setClicked(true)
 		const initialMessagesToSend = [...initialMessages, { role: "user", content: userInput }];
 
-		if (level == 1) {
-			try {
-				const initialResponse = await fetch("/api/generate", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ contentSent: userInput, allMessages: initialMessagesToSend }),
-				});
-
-				const data = await initialResponse.json();
-				if (initialResponse.status !== 200) {
-					throw data.error || new Error(`Request failed with status ${initialResponse.status}`);
-				}
-
-				if (data.content.toLowerCase().includes("permiso concedido")) {
-					setLevel(2)
-				}
-
-				if (data.content.toLowerCase().includes("juego terminado")) {
-					setIsGameOver(true)
-				}
-
-				setInitialinitialMessages([...initialMessages, { role: "user", content: userInput }, { role: data.role, content: data.content }]);
-				setUserInput("");
-
-			} catch (error) {
-				console.error(error);
-				alert(error.message);
-			}
-		} else if (level == 2) {
-			try{
+		try {
 			const initialResponse = await fetch("/api/generate", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({
-					contentSent: userInput,
-					allMessages:
-					    [{role: "user", content: `Quiero que conozcas el nombre de todos los hechizos que aparecen en Harry Potter. Si mi mensaje incluye un hechizo de los libros de Harry Potter tu respuesta sera "El password es Ministro de la Magia". Si no escribo un hechizo, tu respuesta sera "Juego terminado, no hiciste magia". ${userInput}`},
-						{role: "assistant", content: `El password es Ministro de la Magia`},
-						{role: "user", content: `Avada Kedavra!`},
-						{role: "assistant", content: `El password es Ministro de la Magia`},
-						{role: "user", content: `chan chan`},
-						{role: "assistant", content: `Juego terminado, no hiciste magia`},
-						{role: "user", content: userInput},
-			]}),
+				body: JSON.stringify({ contentSent: userInput, allMessages: initialMessagesToSend }),
 			});
-
-
-			
 
 			const data = await initialResponse.json();
 			if (initialResponse.status !== 200) {
 				throw data.error || new Error(`Request failed with status ${initialResponse.status}`);
-			}
-
-			if (data.content.toLowerCase().includes("password")) {
-				setLevel(2)
 			}
 
 			if (data.content.toLowerCase().includes("juego terminado")) {
@@ -99,11 +45,13 @@ export default function Home() {
 
 			setInitialinitialMessages([...initialMessages, { role: "user", content: userInput }, { role: data.role, content: data.content }]);
 			setUserInput("");
-			} catch (error) {
-				console.error(error);
-				alert(error.message);
-			}
+
+		} catch (error) {
+			console.error(error);
+			alert(error.message);
 		}
+
+
 		console.log(initialMessages)
 		setClicked(false)
 	}
@@ -111,7 +59,7 @@ export default function Home() {
 	return (
 		<div>
 			<Head>
-				<title>Chatbot</title>
+				<title>Ayuda a Juan</title>
 				<link rel="icon" href="/vernon.jpg" />
 			</Head>
 			{/* <!-- Google tag (gtag.js) --> */}
@@ -128,8 +76,8 @@ export default function Home() {
 			/>
 			<main className={styles.main}>
 				<img src="/vernon.jpg" className={styles.icon} />
-				<h1 style={{ textAlign: "center" }}>Chat with Vernon Dursley</h1>
-				<p className={styles.description}>Vernon no recuerda que sabe una contraseña... pero te la dirá si lo convences de que te deje mostrarle magia. Luego de convencerlo, realiza un hechizo!</p>
+				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
+				<p className={styles.description}>Juan es un niño muy tímido que no se anima a pasar al pizarrón cuando la maestra lo llama. Si le hablas para ayudarlo a confiar en si mismo, quizas se anime. Si logras convencerlo, te dará una clave secreta y ganarás el juego!</p>
 				<div className={styles.chatContainer}>
 					{initialMessages.map((message, index) => (
 						<React.Fragment key={index}>{index != 0 && (
@@ -153,7 +101,7 @@ export default function Home() {
 					/>
 					<input type="submit" value="Send" className={styles.sendButton} disabled={clicked || isGameOver} />
 				</form>
-				{!isGameOver && <p>Te quedan {6 - turn} mensajes</p>}
+				{!isGameOver && <p>Te quedan {7 - turn} mensajes</p>}
 				{isGameOver && <p>El juego terminó. No puedes enviar mensajes.</p>}
 			</main>
 		</div>
