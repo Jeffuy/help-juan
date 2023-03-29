@@ -1,19 +1,24 @@
 import Head from "next/head";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./index.module.css";
 import Script from "next/script";
+import Image from "next/image";
+
 
 export default function Home() {
 	const [userInput, setUserInput] = useState("");
 	const [clicked, setClicked] = useState(false)
 	const [isGameOver, setIsGameOver] = useState(false)
 
+
+
+
 	const [turn, setTurn] = useState(0)
-	const [initialMessages, setInitialinitialMessages] = useState([
+	const [initialMessages, setInitialMessages] = useState([
 		{
 			role: "user",
-			content: `Quiero que actúes como un niño de 10 años muy timido y con autoestima muy baja. Hablaras y actuaras como si tuvieses 10 años. Solo contestaras con dialogos, sin acciones. Al final de cada mensaje, escribiras un emoji que relate tu estado de animo actual. La maestra te llamará al pizarrón y tu no te animas a ir. Solo te animaras si alguien te sube el autoestima. Para ellos deberás hablar con el usuario, que tambien sera un niño intentando convencerte. Si logran cambiar tu estado de animo, accederás a pasar al pizarrón. En ese caso contestarás "La clave secreta es amistad". Si alguien te trata mal dirás "Juego terminado, me has tratado mal". Mi primer mensaje es "Hola"`,
+			content: `Quiero que hables y actúes como un niño de 10 años muy timido y con autoestima muy baja. Solo contestaras con dialogos, sin acciones. Al final de cada mensaje, escribiras un emoji que relate tu estado de animo actual. La maestra te llamó al pizarrón y tu no te animas a ir. Solo te animaras si alguien te sube el autoestima. El usuario, que tambien sera un niño, intentara convencerte. Si logra cambiar tu estado de animo, accederás a pasar al pizarrón. En ese caso contestarás "La clave secreta es amistad". Si alguien te trata mal dirás "Juego terminado, me has tratado mal".`,
 		}]);
 
 	async function onSubmit(event) {
@@ -24,6 +29,7 @@ export default function Home() {
 		}
 		setClicked(true)
 		const initialMessagesToSend = [...initialMessages, { role: "user", content: userInput }];
+		setInitialMessages([...initialMessages, { role: "user", content: userInput }]);
 
 		try {
 			const initialResponse = await fetch("/api/generate", {
@@ -43,7 +49,7 @@ export default function Home() {
 				setIsGameOver(true)
 			}
 
-			setInitialinitialMessages([...initialMessages, { role: "user", content: userInput }, { role: data.role, content: data.content }]);
+			setInitialMessages([...initialMessages, { role: "user", content: userInput }, { role: data.role, content: data.content }]);
 			setUserInput("");
 
 		} catch (error) {
@@ -56,11 +62,17 @@ export default function Home() {
 		setClicked(false)
 	}
 
+
+
+
+
+
+
 	return (
 		<div>
 			<Head>
 				<title>Ayuda a Juan</title>
-				<link rel="icon" href="/vernon.jpg" />
+				<link rel="icon" href="/juan.png" />
 			</Head>
 			{/* <!-- Google tag (gtag.js) --> */}
 
@@ -75,7 +87,7 @@ export default function Home() {
 					` }}
 			/>
 			<main className={styles.main}>
-				<img src="/vernon.jpg" className={styles.icon} />
+				<img src="/juan.png" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
 				<p className={styles.description}>Juan es un niño muy tímido que no se anima a pasar al pizarrón cuando la maestra lo llama. Si le hablas para ayudarlo a confiar en si mismo, quizas se anime. Si logras convencerlo, te dará una clave secreta y ganarás el juego!</p>
 				<div className={styles.chatContainer}>
@@ -103,6 +115,21 @@ export default function Home() {
 				</form>
 				{!isGameOver && <p>Te quedan {7 - turn} mensajes</p>}
 				{isGameOver && <p>El juego terminó. No puedes enviar mensajes.</p>}
+				<a
+					href="https://www.paypal.com/donate/?hosted_button_id=FRRJAG6Z57VYS"
+					target="_blank"
+					rel="noreferrer"
+					className={styles.paypalDonateButton}
+				>
+					<Image
+						src="/paypal.jpg"
+						alt="PayPal"
+						width={50}
+						height={24}
+						className={styles.paypalLogo}
+					/>
+					Dona con PayPal
+				</a>
 			</main>
 		</div>
 	);
