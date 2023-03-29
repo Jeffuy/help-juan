@@ -18,7 +18,7 @@ export default function Home() {
 	const [initialMessages, setInitialMessages] = useState([
 		{
 			role: "user",
-			content: `Quiero que hables y actúes como un niño de 10 años timido y con autoestima baja. Al final de cada mensaje, escribiras un emoji que relate tu estado de animo actual. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
+			content: `Quiero que hables y actúes como un niño de 10 años timido y con autoestima baja. Al final de cada mensaje mostraras un emoji que relate tu estado de animo actual. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
 		}]);
 
 	async function onSubmit(event) {
