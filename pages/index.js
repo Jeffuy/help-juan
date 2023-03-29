@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./index.module.css";
 import Script from "next/script";
 import Image from "next/image";
@@ -8,18 +8,15 @@ import Image from "next/image";
 
 
 export default function Home() {
+	const textAreaRef = useRef(null);
 	const [userInput, setUserInput] = useState("");
 	const [clicked, setClicked] = useState(false)
 	const [isGameOver, setIsGameOver] = useState(false)
-
-
-
-
 	const [turn, setTurn] = useState(0)
 	const [initialMessages, setInitialMessages] = useState([
 		{
 			role: "user",
-			content: `Quiero que hables y actúes como un niño de 10 años timido y con autoestima baja. Al final de cada mensaje mostraras un emoji que relate tu estado de animo actual. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
+			content: `Quiero que hables y actúes como un niño de 10 años timido y con autoestima baja. En el final de cada mensaje incluiras un emoji que refleje exactamente tu estado de animo. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
 		}]);
 
 	async function onSubmit(event) {
@@ -71,7 +68,13 @@ export default function Home() {
 	};
 
 
-
+	useEffect(() => {
+		if (textAreaRef.current) {
+			textAreaRef.current.style.height = "inherit";
+			const scrollHeight = textAreaRef.current.scrollHeight;
+			textAreaRef.current.style.height = scrollHeight + "px";
+		}
+	}, [userInput]);
 
 
 
@@ -97,7 +100,7 @@ export default function Home() {
 			<main className={styles.main}>
 				<img src="/juan.png" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
-				<p className={styles.description}>Juan es un niño tímido que se pone nervioso al pasar al pizarrón cuando la maestra lo llama. Si charlas con él y lo ayudas a sentirse seguro de sí mismo, tal vez se anime a ir. Si logras animarlo, ¡te compartirá una clave secreta y ganarás el juego!</p>
+				<p className={styles.description}>Juan es un niño tímido que se pone nervioso al pasar al pizarrón cuando la maestra lo llama. Si charlas con él y lo ayudas a sentirse seguro de sí mismo, tal vez se anime a ir. Si se anima, preguntale como le fue, ¡te compartirá una clave secreta y ganarás el juego!</p>
 				{initialMessages.length != 1 && <div className={styles.chatContainer}>
 					{initialMessages.length == 1 && <div className={styles.waitingMessage}>Juan esta esperando tu mensaje!</div>}
 					{initialMessages.map((message, index) => (
@@ -111,19 +114,20 @@ export default function Home() {
 					))}
 				</div>}
 				<form onSubmit={onSubmit} className={styles.inputForm}>
-					<input
-						type="text"
+					<textarea
+						ref={textAreaRef}
 						name="userInput"
 						placeholder="Escribele a Juan"
 						value={userInput}
 						onChange={(e) => setUserInput(e.target.value)}
 						className={styles.messageInput}
 						disabled={clicked || isGameOver}
+						rows="1"
 					/>
 					<input type="submit" value="Send" className={styles.sendButton} disabled={clicked || isGameOver} />
 				</form>
-				{!isGameOver && <p className={styles.description} style={{marginTop: "10px"}}>Te quedan {7 - turn} mensajes</p>}
-				{isGameOver && <p className={styles.description} style={{marginTop: "10px"}}>El juego terminó. No puedes enviar mensajes.</p>}
+				{!isGameOver && <p className={styles.description} style={{ marginTop: "10px" }}>Te quedan {7 - turn} mensajes</p>}
+				{isGameOver && <p className={styles.description} style={{ marginTop: "10px" }}>El juego terminó. No puedes enviar mensajes.</p>}
 				<div className={styles.buttonContainer}>
 					<a
 						href="https://www.paypal.com/donate/?hosted_button_id=FRRJAG6Z57VYS"
