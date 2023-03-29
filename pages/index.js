@@ -164,7 +164,7 @@ export default function Home() {
 						Ayuda a Juan es una aplicación interactiva diseñada para ayudar al desarrollo de la empatía y habilidades socioemocionales a los niños en las aulas. La interacción con personajes como Juan acompaña a los niños mientras identifican emociones, comprenden perspectivas y desarrollan habilidades de comunicación asertivas en un entorno seguro y atractivo.
 					</p>
 					<p>
-						Nuestro objetivo es ayudar a los niños a desarrollar empatía y confianza en sí mismos para enfrentar los desafíos de la vida y construir relaciones significativas y positivas. Esperamos que Ayuda a Juan sea el comienzo de un enriquecedor viaje de aprendizaje emocional.
+						El objetivo es ayudar a los niños a desarrollar empatía y confianza en sí mismos para enfrentar los desafíos de la vida y construir relaciones significativas y positivas. Espero que Ayuda a Juan sea el comienzo de un enriquecedor viaje de aprendizaje emocional.
 					</p>
 				</section>
 			</main>
