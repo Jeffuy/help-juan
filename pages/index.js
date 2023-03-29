@@ -96,7 +96,7 @@ export default function Home() {
 			<main className={styles.main}>
 				<img src="/juan.png" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
-				<p className={styles.description}>Juan es un niño muy tímido que no se anima a pasar al pizarrón cuando la maestra lo llama. Si le hablas para ayudarlo a confiar en si mismo, quizas se anime. Si logras convencerlo, te dará una clave secreta y ganarás el juego!</p>
+				<p className={styles.description}>Juan es un niño tímido que se pone nervioso al pasar al pizarrón cuando la maestra lo llama. Si charlas con él y lo ayudas a sentirse seguro de sí mismo, tal vez se anime a ir. Si logras animarlo, ¡te compartirá una clave secreta y ganarás el juego!</p>
 				<div className={styles.chatContainer}>
 					{initialMessages.map((message, index) => (
 						<React.Fragment key={index}>{index != 0 && (
