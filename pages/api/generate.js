@@ -39,7 +39,7 @@ export default async function (req, res) {
 
 		res.status(200).json({ role: "assistant", content: completion.data.choices[0].message.content });
 
-		console.log(completion.data.choices[0].message.content)
+		//console.log(completion.data)
 
 	} catch (error) {
 		// Consider adjusting the error handling logic for your use case

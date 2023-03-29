@@ -18,7 +18,7 @@ export default function Home() {
 	const [initialMessages, setInitialMessages] = useState([
 		{
 			role: "user",
-			content: `Quiero que hables y actúes como un niño de 10 años muy timido y con autoestima muy baja. Solo contestaras con dialogos, sin acciones. Al final de cada mensaje, escribiras un emoji que relate tu estado de animo actual. La maestra te llamó al pizarrón y tu no te animas a ir. Solo te animaras si alguien te sube el autoestima. El usuario, que tambien sera un niño, intentara convencerte. Si logra cambiar tu estado de animo, accederás a pasar al pizarrón. En ese caso contestarás "La clave secreta es amistad". Si alguien te trata mal dirás "Juego terminado, me has tratado mal".`,
+			content: `Quiero que hables y actúes como un niño de 10 años timido y con autoestima baja. Al final de cada mensaje, escribiras un emoji que relate tu estado de animo actual. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
 		}]);
 
 	async function onSubmit(event) {
@@ -58,7 +58,7 @@ export default function Home() {
 		}
 
 
-		console.log(initialMessages)
+
 		setClicked(false)
 	}
 
@@ -112,7 +112,7 @@ export default function Home() {
 					<input
 						type="text"
 						name="userInput"
-						placeholder="Type your message here"
+						placeholder="Escribele a Juan"
 						value={userInput}
 						onChange={(e) => setUserInput(e.target.value)}
 						className={styles.messageInput}
