@@ -16,8 +16,9 @@ export default function Home() {
 	const [initialMessages, setInitialMessages] = useState([
 		{
 			role: "user",
-			content: `Quiero que hables y actúes como un niño de 10 años timido y con autoestima baja. En el final de cada mensaje incluiras un emoji que refleje exactamente tu estado de animo. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
+			content: `Quiero que hables y actúes como un niño de 9 años timido y con autoestima baja. En el final de cada mensaje incluiras un emoji que refleje exactamente tu estado de animo. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
 		}]);
+	const [writing, setWriting] = useState(false)
 
 	async function onSubmit(event) {
 		event.preventDefault();
@@ -28,6 +29,7 @@ export default function Home() {
 		setClicked(true)
 		const initialMessagesToSend = [...initialMessages, { role: "user", content: userInput }];
 		setInitialMessages([...initialMessages, { role: "user", content: userInput }]);
+		setWriting(true)
 
 		try {
 			const initialResponse = await fetch("/api/generate", {
@@ -58,6 +60,7 @@ export default function Home() {
 
 
 		setClicked(false)
+		setWriting(false)
 	}
 
 	const handleWhatsAppShare = () => {
@@ -100,9 +103,10 @@ export default function Home() {
 			<main className={styles.main}>
 				<img src="/juan.png" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
-				<p className={styles.description}>Juan es un niño tímido que se pone nervioso al pasar al pizarrón cuando la maestra lo llama. Si charlas con él y lo ayudas a sentirse seguro de sí mismo, tal vez se anime a ir. Si se anima, preguntale como le fue, ¡te compartirá una clave secreta y ganarás el juego!</p>
+				<p className={styles.description}>Tienes que animar a Juan, un niño que se pone nervioso cuando la maestra lo llama al pizarrón. Para hacerlo, escribe mensajes amables que lo hagan sentir seguro y valiente. </p>
+				<p className={styles.description}>	Si lo ayudas a vencer su miedo y va al pizarrón, pregúntale cómo le fue. ¡Te dirá un secreto para ganar el juego!</p>
 				{initialMessages.length != 1 && <div className={styles.chatContainer}>
-					{initialMessages.length == 1 && <div className={styles.waitingMessage}>Juan esta esperando tu mensaje!</div>}
+
 					{initialMessages.map((message, index) => (
 						<React.Fragment key={index}>{index != 0 && (
 							<div
@@ -112,6 +116,7 @@ export default function Home() {
 								{message.content}
 							</div>)}</React.Fragment>
 					))}
+					{writing && <div className={styles.waitingMessage}>Escribiendo...</div>}
 				</div>}
 				<form onSubmit={onSubmit} className={styles.inputForm}>
 					<textarea

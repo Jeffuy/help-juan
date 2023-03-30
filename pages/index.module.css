@@ -59,8 +59,9 @@
 	padding: 10px;
 	border-radius: 15px;
 	margin-bottom: 10px;
-	max-width: 70%;
+	max-width: 85%;
 	word-wrap: break-word;
+	font-size: 20px;
 }
 
 .userMessage {
