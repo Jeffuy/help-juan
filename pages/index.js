@@ -8,6 +8,7 @@ import Image from "next/image";
 
 
 export default function Home() {
+	const chatContainerRef = useRef(null);
 	const textAreaRef = useRef(null);
 	const [userInput, setUserInput] = useState("");
 	const [clicked, setClicked] = useState(false)
@@ -79,7 +80,11 @@ export default function Home() {
 		}
 	}, [userInput]);
 
-
+	useEffect(() => {
+		if (chatContainerRef.current) {
+			chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+		}
+	}, [initialMessages]);
 
 	return (
 		<div>
@@ -105,16 +110,17 @@ export default function Home() {
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
 				<p className={styles.description}>Tienes que animar a Juan, un niño que se pone nervioso cuando la maestra lo llama al pizarrón. Para hacerlo, escribe mensajes amables que lo hagan sentir seguro y valiente. </p>
 				<p className={styles.description}>	Si lo ayudas a vencer su miedo y va al pizarrón, pregúntale cómo le fue. ¡Te dirá un secreto para ganar el juego!</p>
-				{initialMessages.length != 1 && <div className={styles.chatContainer}>
-
+				{initialMessages.length != 1 && <div className={styles.chatContainer} ref={chatContainerRef}>
 					{initialMessages.map((message, index) => (
-						<React.Fragment key={index}>{index != 0 && (
-							<div
-
-								className={message.role === "user" ? styles.userMessage : styles.botMessage}
-							>
-								{message.content}
-							</div>)}</React.Fragment>
+						<React.Fragment key={index}>
+							{index != 0 && (
+								<div
+									className={message.role === "user" ? styles.userMessage : styles.botMessage}
+								>
+									{message.content}
+								</div>
+							)}
+						</React.Fragment>
 					))}
 					{writing && <div className={styles.waitingMessage}>Escribiendo...</div>}
 				</div>}
