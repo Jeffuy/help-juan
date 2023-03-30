@@ -125,6 +125,7 @@ export default function Home() {
 						placeholder="Escribele a Juan"
 						value={userInput}
 						onChange={(e) => setUserInput(e.target.value)}
+						onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); onSubmit(e); } }}
 						className={styles.messageInput}
 						disabled={clicked || isGameOver}
 						rows="1"
