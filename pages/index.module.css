@@ -23,7 +23,34 @@
 	font-size: 2rem;
 	color: #4a4a4a;
 	text-align: center;
-	
+
+}
+
+/* Estilos para el contenedor del selector de escenarios */
+.selectorContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+/* Estilos para el label del selector de escenarios */
+.selectorContainer label {
+	font-size: 1.2rem;
+	color: #4a4a4a;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+/* Estilos para el select del selector de escenarios */
+.selectorContainer select {
+	padding: 6px 12px;
+	background-color: white;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 1rem;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .description {
@@ -129,6 +156,25 @@
 
 .sendButton:hover {
 	background-color: #3d8b3d;
+}
+
+.resetButton {
+	background-color: #4caf50;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 10px 2px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background-color 0.3s;
+}
+
+.resetButton:hover {
+	background-color: #45a049;
 }
 
 .buttonContainer {
@@ -334,4 +380,32 @@
 
 .contactList a:hover .logo {
 	filter: brightness(120%);
+}
+
+@media (max-width: 768px) {
+
+	/* Estilos para el label del selector de escenarios */
+	.selectorContainer label {
+		font-size: 1.1rem;
+	}
+
+	/* Estilos para el select del selector de escenarios */
+	.selectorContainer select {
+		padding: 4px 10px;
+		font-size: 0.9rem;
+	}
+}
+
+@media (max-width: 480px) {
+
+	/* Estilos para el label del selector de escenarios */
+	.selectorContainer label {
+		font-size: 1rem;
+	}
+
+	/* Estilos para el select del selector de escenarios */
+	.selectorContainer select {
+		padding: 4px 8px;
+		font-size: 0.8rem;
+	}
 }

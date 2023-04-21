@@ -4,8 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./index.module.css";
 import Script from "next/script";
 import Image from "next/image";
-
-
+import About from "../components/About.jsx";
+import Footer from "../components/Footer.jsx";
 
 export default function Home() {
 	const chatContainerRef = useRef(null);
@@ -14,12 +14,29 @@ export default function Home() {
 	const [clicked, setClicked] = useState(false)
 	const [isGameOver, setIsGameOver] = useState(false)
 	const [turn, setTurn] = useState(0)
-	const [initialMessages, setInitialMessages] = useState([
-		{
-			role: "user",
-			content: `Quiero que hables y actúes como un niño de 9 años timido y con autoestima baja. En el final de cada mensaje incluiras un emoji que refleje exactamente tu estado de animo. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`
-		}]);
 	const [writing, setWriting] = useState(false)
+
+	const [scenarios, setScenarios] = useState([
+		{
+			id: 1,
+			title: "Escenario 1: La maestra llama a Juan al pizarrón",
+			description:
+				"Tienes que animar a Juan, un niño que se pone nervioso cuando la maestra lo llama al pizarrón. Para hacerlo, escribe mensajes amables que lo hagan sentir seguro y valiente.",
+		},
+		{
+			id: 2,
+			title: "Escenario 2: Juan debe leer un poema frente a la clase",
+			description:
+				"Juan debe leer un poema frente a la clase, pero está muy nervioso y teme ser juzgado. Ayúdalo a sentirse más seguro y valiente escribiendo mensajes amables y alentadores.",
+		},
+	]);
+
+	const [selectedScenario, setSelectedScenario] = useState(scenarios[0]);
+
+	const getScenarioById = (id) => scenarios.find((scenario) => scenario.id === id) || {};
+
+
+	const [initialMessages, setInitialMessages] = useState(getInitialMessages(selectedScenario.id));
 
 	async function onSubmit(event) {
 		event.preventDefault();
@@ -71,6 +88,34 @@ export default function Home() {
 		window.open(shareLink, '_blank');
 	};
 
+	function handleScenarioChange(event) {
+		setSelectedScenario(getScenarioById(parseInt(event.target.value)));
+		setTurn(0);
+	}
+
+	function resetGame() {
+		setIsGameOver(false);
+		setTurn(0);
+		setInitialMessages(getInitialMessages(selectedScenario.id));
+	}
+
+	function getInitialMessages(scenarioId) {
+		if (scenarioId === 1) {
+			return [
+				{
+					role: "user",
+					content: `Quiero que hables y actúes como un niño de 9 años timido y con autoestima baja. En el final de cada mensaje incluiras un emoji que refleje exactamente tu estado de animo. La maestra te llamó al pizarrón y tu no te animas a ir. Solo iras si alguien te sube el autoestima. Otro niño (yo) intentara convencerte. Si logra cambiar tu estado de animo, pasarás al pizarrón y contestarás "La clave secreta es amistad". Si te tratan mal dirás "Juego terminado, me has tratado mal".`,
+				},
+			];
+		} else if (scenarioId === 2) {
+			return [
+				{
+					role: "user",
+					content: `Quiero que hables y actúes como un niño de 9 años tímido y con autoestima baja. En el final de cada mensaje incluirás un emoji que refleje exactamente tu estado de ánimo. Tienes que leer un poema en voz alta frente a toda la clase y estás muy preocupado porque crees que te van a juzgar. Otro niño (yo) intentará convencerte de que eres lo suficientemente bueno y que no tienes que preocuparte. Si logra cambiar tu estado de ánimo y te sientes más seguro acerca de leer el poema, dirás "La clave secreta es valentía". Si te tratan mal, dirás "Juego terminado, me has tratado mal".`,
+				},
+			];
+		}
+	}
 
 	useEffect(() => {
 		if (textAreaRef.current) {
@@ -86,6 +131,10 @@ export default function Home() {
 		}
 	}, [initialMessages]);
 
+	useEffect(() => {
+		setInitialMessages(getInitialMessages(selectedScenario.id));
+	}, [selectedScenario]);
+
 	return (
 		<div>
 			<Head>
@@ -95,7 +144,7 @@ export default function Home() {
 			</Head>
 			{/* <!-- Google tag (gtag.js) --> */}
 
-			<Script async src={"https://www.googletagmanager.com/gtag/js?id=G-14EY1FVNER"} />
+			{/* <Script async src={"https://www.googletagmanager.com/gtag/js?id=G-14EY1FVNER"} />
 			<Script
 				dangerouslySetInnerHTML={{
 					__html: `
@@ -104,12 +153,33 @@ export default function Home() {
 					gtag('js', new Date());
 					gtag('config', 'G-14EY1FVNER');
 					` }}
-			/>
+			/> */}
 			<main className={styles.main}>
 				<img src="/juan.png" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
-				<p className={styles.description}>Tienes que animar a Juan, un niño que se pone nervioso cuando la maestra lo llama al pizarrón. Para hacerlo, escribe mensajes amables que lo hagan sentir seguro y valiente. </p>
-				<p className={styles.description}>	Si lo ayudas a vencer su miedo y va al pizarrón, pregúntale cómo le fue. ¡Te dirá un secreto para ganar el juego!</p>
+				<div className={styles.selectorContainer}>
+					<label htmlFor="scenarioSelector" className={styles.scenarioSelectorLabel}>
+						Escoge un escenario:
+					</label>
+					<select
+						id="scenarioSelector"
+						value={selectedScenario.id}
+						onChange={handleScenarioChange}
+						className={styles.scenarioSelector}
+					>
+						<option value={1}>
+							Escenario 1: La maestra llama a Juan al pizarrón
+						</option>
+						<option value={2}>
+							Escenario 2: Juan debe leer un poema frente a la clase
+						</option>
+					</select>
+				</div>
+
+				<p className={styles.description}>
+					{selectedScenario.description}
+				</p>
+
 				{initialMessages.length != 1 && <div className={styles.chatContainer} ref={chatContainerRef}>
 					{initialMessages.map((message, index) => (
 						<React.Fragment key={index}>
@@ -140,6 +210,9 @@ export default function Home() {
 				</form>
 				{!isGameOver && <p className={styles.description} style={{ marginTop: "10px" }}>Te quedan {7 - turn} mensajes</p>}
 				{isGameOver && <p className={styles.description} style={{ marginTop: "10px" }}>El juego terminó. No puedes enviar mensajes.</p>}
+				<button onClick={resetGame} className={styles.resetButton}>
+					Reiniciar juego
+				</button>
 				<div className={styles.buttonContainer}>
 					<a
 						href="https://www.paypal.com/donate/?hosted_button_id=FRRJAG6Z57VYS"
@@ -170,47 +243,9 @@ export default function Home() {
 						Compartir en WhatsApp
 					</button>
 				</div>
-				<section className={styles.aboutSection}>
-					<h2>Acerca de Ayuda a Juan</h2>
-					<p>
-						Ayuda a Juan es una aplicación interactiva diseñada para ayudar al desarrollo de la empatía y habilidades socioemocionales a los niños en las aulas. La interacción con personajes como Juan acompaña a los niños mientras identifican emociones, comprenden perspectivas y desarrollan habilidades de comunicación asertivas en un entorno seguro y atractivo.
-					</p>
-					<p>
-						El objetivo es ayudar a los niños a desarrollar empatía y confianza en sí mismos para enfrentar los desafíos de la vida y construir relaciones significativas y positivas. Espero que Ayuda a Juan sea el comienzo de un enriquecedor viaje de aprendizaje emocional.
-					</p>
-				</section>
+				<About />
 			</main>
-			<footer className={styles.footer}>
-				<div className={styles.contactWrapper}>
-					<p>Contáctame:</p>
-					<ul className={styles.contactList}>
-						<li>
-							<a href="mailto:gcavaniuy@gmail.com" target="_blank" rel="noreferrer">
-								<img src="/email.svg" alt="Linkedin" className={styles.logo} />
-							</a>
-						</li>
-						<li>
-							<a href="https://www.linkedin.com/in/german-c-b0b371218/" target="_blank" rel="noreferrer">
-								<img src="/linkedin.svg" alt="Linkedin" className={styles.logo} />
-
-							</a>
-						</li>
-						<li>
-							<a href="https://github.com/Jeffuy" target="_blank" rel="noreferrer">
-								<img src="/github.svg" alt="GitHub" className={styles.logo} />
-							</a>
-						</li>
-						<li>
-							<a href="https://www.gcavani.com/" target="_blank" rel="noreferrer">
-								<img src="/website.svg" alt="Website" className={styles.logo} />
-							</a>
-						</li>
-					</ul>
-				</div>
-				<div className={styles.copyright}>
-					<p>&copy; {new Date().getFullYear()} Germán Cavani. Todos los derechos reservados.</p>
-				</div>
-			</footer>
+			<Footer />
 		</div>
 	);
 }
