@@ -27,7 +27,7 @@ export default function Home() {
 			id: 2,
 			title: "Escenario 2: Juan debe leer un poema frente a la clase",
 			description:
-				"Juan debe leer un poema frente a la clase, pero está muy nervioso y teme ser juzgado. Ayúdalo a sentirse más seguro y valiente escribiendo mensajes amables y alentadores.",
+				"Juan debe leer un poema frente a la clase, pero está muy nervioso y teme que se rían de él. Ayúdalo a sentirse más seguro y valiente escribiendo mensajes amables y alentadores.",
 		},
 	]);
 
