@@ -144,7 +144,7 @@ export default function Home() {
 			</Head>
 			{/* <!-- Google tag (gtag.js) --> */}
 
-			{/* <Script async src={"https://www.googletagmanager.com/gtag/js?id=G-14EY1FVNER"} />
+			<Script async src={"https://www.googletagmanager.com/gtag/js?id=G-14EY1FVNER"} />
 			<Script
 				dangerouslySetInnerHTML={{
 					__html: `
@@ -153,7 +153,7 @@ export default function Home() {
 					gtag('js', new Date());
 					gtag('config', 'G-14EY1FVNER');
 					` }}
-			/> */}
+			/>
 			<main className={styles.main}>
 				<img src="/juan.png" className={styles.icon} />
 				<h1 style={{ textAlign: "center" }}>Ayuda a Juan</h1>
